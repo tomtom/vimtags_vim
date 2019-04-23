@@ -1,0 +1,11 @@
+{
+    "name" : "vimtags",
+    "version" : "dev",
+    "author" : "Tom Link <micathom at gmail com>",
+    "maintainer" : "Tom Link <micathom at gmail com>",
+    "repository" : {"type": "git", "url": "git://github.com/tomtom/vimtags_vim.git"},
+    "dependencies" : {
+    "tlib": {"type": "git", "url": "git://github.com/tomtom/tlib_vim.git"}
+  },
+    "description" : "Create and update tags files with pure VIM (without ctags etc.)"
+}
