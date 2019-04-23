@@ -6,19 +6,19 @@ tags files created by other programs like ctags.
 
 Examples: >
 
-    " Create a tags file with |:Vimtags|
+    " Create a tags file with `:Vimtags`
     Vimtags ~/.vim/pack/tags ~/.vim/pack/**/*.vim
 
-    " Create tags patterns for a new language with |:Vimtagsfiletype| and 
-    " |:Vimtagsdef|
+    " Create tags patterns for a new language with `:Vimtagsfiletype` and 
+    " `:Vimtagsdef`
     Vimtagsfiletype R *.R *.r
-    Vimtagsdef R /^\s*"?\([.A-Za-z][.A-Za-z0-9_]*\)"?\s*<-\s*function/ f
+    Vimtagsdef R /^\s*"?\([.A-Za-z][.A-Za-z0-9_]*\)"?\s*\<-\s*function/ f
 
-    " Read your ctags config with |:Vimtagsctagsconfig| (see also 
-    " |:Vimtagsctags|)
+    " Read your ctags config with `:Vimtagsctagsconfig` (see also 
+    " `:Vimtagsctags`)
     Vimtagsctagsconfig ~/.ctags
 
-If a file is connected to a tags file created by |:Vimtags|, the tags file will 
+If a file is connected to a tags file created by `:Vimtags`, the tags file will 
 be automatically updated if necessary when saving the file.
 
 Out of the box, vimtags comes with support for the following languages:
@@ -27,7 +27,7 @@ Out of the box, vimtags comes with support for the following languages:
 - markdown
 - R
 - vimscript
-- viki (vimscript #5551 and vimscript #861)
+- viki ([vimscript #5551](http://www.vim.org/scripts/script.php?script_id=5551) and [vimscript #861](http://www.vim.org/scripts/script.php?script_id=861))
 
 Experimental, hardly tested:
 
@@ -40,7 +40,8 @@ Experimental, hardly tested:
 
 
 -----------------------------------------------------------------------
-Install~
+
+# Install
 
 Either use the zip archive:
 
@@ -67,7 +68,9 @@ Also available via git: http://github.com/tomtom/vimtags_vim
 
 
 Dependencies:
-  tlib (>= 1.27) :: http://github.com/tomtom/tlib_vim
+<dl>
+<dt>tlib (>= 1.27)</dt><dd>http://github.com/tomtom/tlib_vim</dd>
+</dl>
 
 License: GPLv3 or later
 
