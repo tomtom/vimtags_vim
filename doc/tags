@@ -1,0 +1,9 @@
+:Vimtags	vimtags.txt	/*:Vimtags*
+:Vimtagsctags	vimtags.txt	/*:Vimtagsctags*
+:Vimtagsctagsconfig	vimtags.txt	/*:Vimtagsctagsconfig*
+:Vimtagsfiletype	vimtags.txt	/*:Vimtagsfiletype*
+:Vimtagskind	vimtags.txt	/*:Vimtagskind*
+autoload/vimtags/defs/vim.vim	vimtags.txt	/*autoload\/vimtags\/defs\/vim.vim*
+g:vimtags#defs#default#vim_include_prefix	vimtags.txt	/*g:vimtags#defs#default#vim_include_prefix*
+plugin/vimtags.vim	vimtags.txt	/*plugin\/vimtags.vim*
+vimtags.txt	vimtags.txt	/*vimtags.txt*

@@ -2,7 +2,7 @@
 " @Website:     https://github.com/tomtom
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Last Change: 2019-04-21
-" @Revision:    166
+" @Revision:    167
 " GetLatestVimScripts: 0 0 vimtags.vim
 
 if &cp || exists('g:loaded_vimtags')
@@ -45,7 +45,7 @@ function! s:AddTagDef(bang, filetype, def) abort "{{{3
 endf
 
 
-" :hide:
+" :nodoc:
 function! Vimtagskind(bang, filetype, rx, ...) abort "{{{3
     let l:def = {}
     let rx = matchstr(a:rx, '^/\zs\%([^\\]\+\|\\.\)\+\ze/$')
@@ -90,7 +90,7 @@ function! Vimtagskind(bang, filetype, rx, ...) abort "{{{3
 endf
 
 
-" :hide:
+" :nodoc:
 function! Vimtagsfiletype(bang, filetype, ...) abort "{{{3
     if a:bang || !has_key(g:vimtags_filetypes, a:filetype)
         let g:vimtags_filetypes[a:filetype] = {'glob': [], 'rx': ''}
@@ -102,7 +102,7 @@ endf
 
 let s:langdefs = {}
 
-" :hide:
+" :nodoc:
 function! VimtagsCTags(arg, ...) abort "{{{3
     let l:quiet = a:0 >= 1 ? a:1 : 0
     if a:arg =~# '^--langdef='
@@ -148,7 +148,7 @@ function! VimtagsCTags(arg, ...) abort "{{{3
 endf
 
 
-" :hide:
+" :nodoc:
 function! VimtagsCTagsConfig(filename) abort "{{{3
     for line in readfile(a:filename)
         if line =~# '^-'

@@ -23,20 +23,20 @@ be automatically updated if necessary when saving the file.
 
 Out of the box, vimtags comes with support for the following languages:
 
-    - latex
-    - markdown
-    - R
-    - vimscript
-    - viki
+- latex
+- markdown
+- R
+- vimscript
+- viki (vimscript #5551 and vimscript #861)
 
 Experimental, hardly tested:
 
-    - clojure
-    - coffee
-    - haxe
-    - javascript
-    - kotlin
-    - scala
+- clojure
+- coffee
+- haxe
+- javascript
+- kotlin
+- scala
 
 
 -----------------------------------------------------------------------

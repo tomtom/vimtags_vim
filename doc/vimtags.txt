@@ -1,0 +1,141 @@
+*vimtags.txt*       Create and update tags files with pure VIM (without ctags etc.)
+                    Author: Tom Link, micathom at gmail com
+
+The vimtags plugin creates and maintains tags files with pure vimscript. No 
+external helper app like ctags and friends is involved.
+
+NOTE: vimtags will only update tags files created by vimtags. It won't modify 
+tags files created by other programs like ctags.
+
+Examples: >
+
+    " Create a tags file with |:Vimtags|
+    Vimtags ~/.vim/pack/tags ~/.vim/pack/**/*.vim
+
+    " Create tags patterns for a new language with |:Vimtagsfiletype| and 
+    " |:Vimtagsdef|
+    Vimtagsfiletype R *.R *.r
+    Vimtagsdef R /^\s*"?\([.A-Za-z][.A-Za-z0-9_]*\)"?\s*<-\s*function/ f
+
+    " Read your ctags config with |:Vimtagsctagsconfig| (see also 
+    " |:Vimtagsctags|)
+    Vimtagsctagsconfig ~/.ctags
+
+If a file is connected to a tags file created by |:Vimtags|, the tags file will 
+be automatically updated if necessary when saving the file.
+
+Out of the box, vimtags comes with support for the following languages:
+
+- latex
+- markdown
+- R
+- vimscript
+- viki (vimscript #5551 and vimscript #861)
+
+Experimental, hardly tested:
+
+- clojure
+- coffee
+- haxe
+- javascript
+- kotlin
+- scala
+
+
+-----------------------------------------------------------------------
+Install~
+
+Either use the zip archive:
+
+- Download the zip archive
+- Extract it to `~/.vim/pack/tml/start/vimtags_vim`
+
+or install from github:
+
+- Start a terminal
+- Change the working directory to `~/.vim/pack/tml/start/`
+- Type: `git clone https://github.com/tomtom/vimtags_vim`
+
+or use a VIM plugin manager like vim-plug, vundle, dein.vim, VAM etc.
+
+NOTE: On Windows, ~/.vim might be ~/vimfiles. Please see 'runtimepath' 
+for details.
+
+Some features require the tlib_vim plugin to be installed:
+https://github.com/tomtom/tlib_vim
+
+Also available via git: http://github.com/tomtom/vimtags_vim
+
+
+========================================================================
+Contents~
+
+        :Vimtags .................................... |:Vimtags|
+        :Vimtagsfiletype ............................ |:Vimtagsfiletype|
+        :Vimtagskind ................................ |:Vimtagskind|
+        :Vimtagsctags ............................... |:Vimtagsctags|
+        :Vimtagsctagsconfig ......................... |:Vimtagsctagsconfig|
+        g:vimtags#defs#default#vim_include_prefix ... |g:vimtags#defs#default#vim_include_prefix|
+
+
+------------------------------------------------------------------------
+                                                    *plugin/vimtags.vim*
+                                                    *:Vimtags*
+:Vimtags[!] TAGSFILE [PATTERN]
+    Create a tags file by scanning all files below the |current-directory| 
+    (that match a given |glob()| pattern if any).
+
+                                                    *:Vimtagsfiletype*
+:Vimtagsfiletype[!] FILETYPE FILENAME_PATTERN...
+    Define a new filetype for files matching a certain filename pattern 
+    (given as |glob()| pattern).
+
+    Usually, the definition of a filetype should be followed by several 
+    |:Vimtagskind| commands that define kinds of tags.
+
+                                                    *:Vimtagskind*
+:Vimtagskind[!] FILETYPE /REGEXP/ [FIELDS...]
+    Define a new kind for a certain filetype (previously defined via 
+    |:Vimtagsfiletype|) for lines matching a certain |regexp|.
+
+    FILETYPE ... A filetype
+    REGEXP   ... A valid |regexp| Use backslashes to escape any character. 
+                 I.e. ''\\'' is one backslash.
+
+    FIELDS can be one or more of:
+
+      hide=N
+      if=EXPR
+      ignore_rx=/REGEX/
+      let:NAME=VALUE
+      lnum=N[,N]
+      submatch=N
+
+    Any other extra information is added as extra field to the tag.
+    EXTRA...
+
+                                                    *:Vimtagsctags*
+:Vimtagsctags [CTAGS COMMAND LINE OPTION]
+    Use ctags command line options to define filetypes and kinds. The 
+    following options are supported:
+
+    --langdef=LANG
+    --langmap=LANG:SUFFIX
+    --regex-LANG=REGEXP
+
+                                                    *:Vimtagsctagsconfig*
+:Vimtagsctagsconfig
+    :display| :Vimtagsctagsconfig FILENAME
+    Read a ctags configuration file and parse its command-line options.
+
+
+------------------------------------------------------------------------
+                                                    *autoload/vimtags/defs/vim.vim*
+                                                    *g:vimtags#defs#default#vim_include_prefix*
+g:vimtags#defs#default#vim_include_prefix (default: 0)
+    Some VIM commands don't work properly if prefixes like `s:` are 
+    included in the tag name, which is why it is excluded by default.
+
+
+
+vim:tw=78:fo=w2croql:isk=!-~,^*,^|,^":ts=8:ft=help:norl:
