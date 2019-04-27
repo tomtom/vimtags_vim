@@ -81,9 +81,12 @@ Contents~
 ------------------------------------------------------------------------
                                                     *plugin/vimtags.vim*
                                                     *:Vimtags*
-:Vimtags[!] TAGSFILE [PATTERN]
+:Vimtags[!] TAGSFILE [PATTERN...]
     Create a tags file by scanning all files below the |current-directory| 
     (that match a given |glob()| pattern if any).
+
+    With the optional <bang> '!', the tags file will be replaced. Without 
+    the bang, the tags file will be updated.
 
                                                     *:Vimtagsfiletype*
 :Vimtagsfiletype[!] FILETYPE FILENAME_PATTERN...

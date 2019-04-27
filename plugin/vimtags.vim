@@ -1,8 +1,8 @@
 " @Author:      Tom Link (micathom AT gmail com?subject=[vim])
 " @Website:     https://github.com/tomtom
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
-" @Last Change: 2019-04-21
-" @Revision:    167
+" @Last Change: 2019-04-24
+" @Revision:    171
 " GetLatestVimScripts: 0 0 vimtags.vim
 
 if &cp || exists('g:loaded_vimtags')
@@ -158,9 +158,12 @@ function! VimtagsCTagsConfig(filename) abort "{{{3
 endf
 
 
-" :display: :Vimtags[!] TAGSFILE [PATTERN]
+" :display: :Vimtags[!] TAGSFILE [PATTERN...]
 " Create a tags file by scanning all files below the |current-directory| 
 " (that match a given |glob()| pattern if any).
+"
+" With the optional <bang> '!', the tags file will be replaced. Without 
+" the bang, the tags file will be updated.
 command! -nargs=* -bang -bar -complete=file Vimtags call vimtags#Update(!empty("<bang>"), <f-args>)
 
 
