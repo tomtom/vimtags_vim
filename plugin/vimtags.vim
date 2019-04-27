@@ -1,14 +1,14 @@
 " @Author:      Tom Link (micathom AT gmail com?subject=[vim])
 " @Website:     https://github.com/tomtom
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
-" @Last Change: 2019-04-24
-" @Revision:    171
-" GetLatestVimScripts: 0 0 vimtags.vim
+" @Last Change: 2019-04-27
+" @Revision:    173
+" GetLatestVimScripts: 5783 0 vimtags.vim
 
 if &cp || exists('g:loaded_vimtags')
     finish
 endif
-let g:loaded_vimtags = 1
+let g:loaded_vimtags = 101
 
 let s:save_cpo = &cpo
 set cpo&vim

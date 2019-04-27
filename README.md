@@ -59,7 +59,7 @@ or use a VIM plugin manager like vim-plug, vundle, dein.vim, VAM etc.
 NOTE: On Windows, ~/.vim might be ~/vimfiles. Please see 'runtimepath' 
 for details.
 
-Some features require the tlib_vim plugin to be installed:
+Some features require the tlib_vim plugin ([vimscript #1863](http://www.vim.org/scripts/script.php?script_id=1863)) to be installed:
 https://github.com/tomtom/tlib_vim
 
 Also available via git: http://github.com/tomtom/vimtags_vim
