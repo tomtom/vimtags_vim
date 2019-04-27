@@ -1,8 +1,8 @@
 " @Author:      Tom Link (mailto:micathom AT gmail com?subject=[vim])
 " @Website:     https://github.com/tomtom
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
-" @Last Change: 2019-04-16
-" @Revision:    267
+" @Last Change: 2019-04-24
+" @Revision:    289
 
 
 if exists(':Tlibtrace') != 2
@@ -13,7 +13,7 @@ endif
 if !exists('g:loaded_tlib') || g:loaded_tlib < 127
     runtime plugin/tlib.vim
     if !exists('g:loaded_tlib') || g:loaded_tlib < 127
-        echoerr 'tlib >= 1.27 is required'
+        echoerr 'tlib >= 1.27 is required (http://bit.ly/tlib_vim)'
         finish
     endif
 endif
@@ -184,15 +184,15 @@ function! s:UpdatetagsfileWithLines(filetype, filename, lines, tagsfile, tags) a
     Tlibtrace 'vimtags', len(l:tags)
     let l:patterns = s:GetPatterns(a:filetype, a:filename)
     if !empty(l:patterns)
-        let l:relfilename =  tlib#file#Relative(fnamemodify(a:filename, ':p'), fnamemodify(a:tagsfile, ':p:h'))
+        let l:relfilename = tlib#file#Canonic(tlib#file#Relative(fnamemodify(a:filename, ':p'), fnamemodify(a:tagsfile, ':p:h')), 'slash')
         let l:new_tags = s:GetTagsFromLines(l:relfilename, l:patterns, a:lines)
         Tlibtrace 'vimtags', len(l:new_tags)
         " if g:vimtags#debug
         "     echom 'Vimtags:' len(l:new_tags) 'in' l:relfilename
         " endif
         if !empty(l:new_tags)
-            let l:filter_rx = "\t". l:relfilename ."\t"
-            let l:filter_rx = substitute(l:filter_rx, '\\', '/', 'g')
+            let l:filter_rx = '\V\t'. substitute(l:relfilename, '[\\/]', '\\[\\\\/]', 'g') .'\t'
+            " let l:filter_rx = substitute(l:filter_rx, '\\', '/', 'g')
             Tlibtrace 'vimtags', l:filter_rx
             let l:tags = filter(l:tags, 'v:val !~# l:filter_rx')
             Tlibtrace 'vimtags', len(l:tags)
@@ -257,32 +257,36 @@ endf
 
 function! vimtags#Update(bang, tagsfile, ...) abort "{{{3
     Tlibtrace 'vimtags', a:bang, a:tagsfile, filereadable(a:tagsfile), a:000
-    let l:filepattern = a:0 >= 1 ? a:1 : '**'
+    let l:filepatterns = a:0 >= 1 ? a:000 : ['**']
     let l:tags0 = s:ReadTagsFile(!a:bang, a:tagsfile)
     let l:tags = s:GetNewTags(l:tags0)
     let l:filescan_rx = '\%('. join(map(values(g:vimtags_filetypes), 'v:val.rx'), '\|') .'\)'
-    let l:filenames = filter(glob(l:filepattern, 1, 1), 'v:val =~# l:filescan_rx && !isdirectory(v:val)')
-    Tlibtrace 'vimtags', len(l:tags0), len(l:filenames)
-    let l:pb = tlib#progressbar#Init(len(l:filenames))
-    try
-        let l:fidx = 1
-        for l:filename in l:filenames
-            call tlib#progressbar#Display(l:fidx, pathshorten(l:filename))
-            let l:bufnr = bufnr(l:filename)
-            if l:bufnr == -1
-                if !filereadable(l:filename)
-                    throw 'vimtags#Update: File not readable: '. l:filename
+    for l:filepattern in l:filepatterns
+        let l:filenames = filter(glob(l:filepattern, 1, 1), 'v:val =~# l:filescan_rx && !isdirectory(v:val)')
+        Tlibtrace 'vimtags', len(l:tags0), len(l:filenames)
+        let l:pb = tlib#progressbar#Init(len(l:filenames))
+        try
+            let l:fidx = 1
+            for l:filename in l:filenames
+                Tlibtrace 'vimtags', l:filename, len(l:tags)
+                call tlib#progressbar#Display(l:fidx, pathshorten(l:filename))
+                let l:bufnr = bufnr(l:filename)
+                if l:bufnr == -1
+                    if !filereadable(l:filename)
+                        throw 'vimtags#Update: File not readable: '. l:filename
+                    else
+                        let l:tags = s:UpdatetagsfileWithLines('', l:filename, readfile(l:filename), '', l:tags)
+                    endif
                 else
-                    let l:tags = s:UpdatetagsfileWithLines('', l:filename, readfile(l:filename), '', l:tags)
+                    let l:filetype = s:GetFiletype(l:filename, l:bufnr)
+                    let l:tags = s:UpdateBuffer(l:bufnr, l:filetype, a:tagsfile, l:tags, 0)
                 endif
-            else
-                let l:filetype = s:GetFiletype(l:filename, l:bufnr)
-                let l:tags = s:UpdateBuffer(l:bufnr, l:filetype, a:tagsfile, l:tags, 0)
-            endif
-        endfor
-    finally
-        call tlib#progressbar#Restore(l:pb)
-    endtry
+                Tlibtrace 'vimtags', len(l:tags)
+            endfor
+        finally
+            call tlib#progressbar#Restore(l:pb)
+        endtry
+    endfor
     if !empty(a:tagsfile)
         Tlibtrace 'vimtags', len(l:tags0)
         let l:tags = s:WriteTagsFile(a:tagsfile, l:tags0, l:tags, 1)
