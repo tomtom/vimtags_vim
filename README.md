@@ -1,5 +1,9 @@
 The vimtags plugin creates and maintains tags files with pure vimscript. No 
-external helper app like ctags and friends is involved.
+external helper app like ctags and friends is involved. Of course, this is not 
+a replacement for ctags but it allows users to work without ctags for languages 
+that aren't yet supported by ctags and for which users would have to define 
+their own regexp patterns. It is also useful in settings where you cannot 
+simply install ctags.
 
 NOTE: vimtags will only update tags files created by vimtags. It won't modify 
 tags files created by other programs like ctags.
